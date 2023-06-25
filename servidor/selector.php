@@ -41,8 +41,11 @@ $uri = explode("/", substr($_SERVER['REQUEST_URI'], 1));
 
 if (str_starts_with($uri[0], "pacientes")){
     require "pacientes.php";
+    if ($metodo == "GET") Pacientes_GET();
+    else if ($metodo == "POST") Pacientes_POST();
 } else if (str_starts_with($uri[0], "paciente")){
     require "pacientes.php";
+    if ($metodo == "GET") Paciente_GET();
 } else if (str_starts_with($uri[0], "clientes")){
     require "clientes.php";
     if ($metodo == "GET") Clientes_GET();

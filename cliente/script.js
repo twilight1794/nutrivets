@@ -1,6 +1,53 @@
 "use strict"
-function actualTablaClientes(){
-    let tbl = document.querySelector("#actClientes .formBusqueda tbody");
+function actualTablaPacientes(cteMasc){
+    let tbl = document.querySelector("#actPacientes .formBusqueda table:nth-of-type(2) tbody");
+    tbl.textContent = "";
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                d.forEach((e) => {
+                    let fila = tbl.insertRow();
+                    fila.insertCell(-1).textContent = e["idMasc"];
+                    fila.insertCell(-1).textContent = e["nomMasc"];
+                    fila.insertCell(-1).textContent = e["especieMasc"];
+                    fila.insertCell(-1).textContent = e["razaMasc"];
+                    fila.insertCell(-1).textContent = e["sexoMasc"];
+                    fila.insertCell(-1).textContent = e["fechaNacMasc"];
+                });
+            } else noti.error("Error al recuperar la lista de pacientes");
+        }
+    }
+    xmlhttp.open("GET", "pacientes?cteMasc="+cteMasc);
+    xmlhttp.send();
+}
+
+function actualListaClientes(){
+    let tbl = document.getElementById("selPacientesDueno");
+    tbl.textContent = "";
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                d.forEach((e) => {
+                    let opt = document.createElement("option");
+                    opt.value = e["idCte"];
+                    opt.textContent = e["nomCte"] + " " + e["apPatCte"] + " " + e["apMatCte"];
+                    tbl.appendChild(opt);
+                });
+            } else noti.error("Error al recuperar la lista de clientes");
+        }
+    }
+    xmlhttp.open("GET", "clientes");
+    xmlhttp.send();
+}
+
+function actualTablaClientes(v){
+    let tbl;
+    if (v == 0) tbl = document.querySelector("#actClientes .formBusqueda tbody");
+    else if (v == 1) tbl = document.querySelector("#actPacientes .formBusqueda table:nth-of-type(1) tbody");
     tbl.textContent = "";
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -12,11 +59,20 @@ function actualTablaClientes(){
                     fila.insertCell(-1).textContent = e["idCte"];
                     fila.insertCell(-1).textContent = e["nomCte"] + " " + e["apPatCte"] + " " + e["apMatCte"];
                     fila.insertCell(-1).textContent = e["telCte"];
-                    console.log(Array.from(document.getElementById("dlVialidad").children).find((e2) => e2.value == e["tipoCalleCte"]));
                     fila.insertCell(-1).textContent = Array.from(document.getElementById("dlVialidad").children).find((e2) => e2.value == e["tipoCalleCte"]).textContent + " " + e["calleCte"];
                     fila.insertCell(-1).textContent = Array.from(document.getElementById("dlLocalidad").children).find((e2) => e2.value == e["tipoPobCte"]).textContent + " " + e["pobCte"];
                     fila.insertCell(-1).textContent = e["cpCte"];
-                    fila.insertCell(-1).textContent = e["munCte"] + Array.from(document.getElementById("dlEstado").children).find((e2) => e2.value == e["edoCte"]).textContent;
+                    fila.insertCell(-1).textContent = e["munCte"] + ", " + Array.from(document.getElementById("dlEstado").children).find((e2) => e2.value == e["edoCte"]).textContent;
+                    if (v == 1){
+                        let rdAct = document.createElement("input");
+                        rdAct.type = "radio";
+                        rdAct.name = "rdAct";
+                        rdAct.addEventListener("change", (e) => {
+                            if (e.target.checked)
+                                actualTablaPacientes(e.target.parentNode.parentNode.children[0].textContent);
+                        });
+                        fila.insertCell(-1).appendChild(rdAct);
+                    }
                 });
             } else noti.error("Error al recuperar la lista de clientes");
         }
@@ -77,8 +133,10 @@ function estPantalla(id){
         // Actualización de listados
         switch (id){
             case "actClientes":
-                actualTablaClientes(); break;
+                actualTablaClientes(0); break;
             case "actPacientes":
+                actualListaClientes();
+                actualTablaClientes(1);
                 break;
             case "actMateriales":
                 actualTablaInventario(0); break;
@@ -98,9 +156,13 @@ window.addEventListener("DOMContentLoaded", () => {
         e.innerHTML = document.getElementById(id).innerHTML;
     });
 
+    // ¿Hay sesión?
     document.cookie.split(";").some((e) => {
         let p = e.split("=");
-        if (p[0] == "sesion") estPantalla("actMain");
+        if (p[0] == "sesion"){
+            Array.from(document.getElementsByClassName("usuario")).forEach(e => e.textContent = localStorage.getItem("usuario") );
+            estPantalla("actMain");
+        }
         else estPantalla("actLogin");
     });
 
@@ -121,6 +183,7 @@ window.addEventListener("DOMContentLoaded", () => {
         xmlhttp.onreadystatechange = function(){
             if (xmlhttp.readyState==4){
                 Array.from(document.getElementsByClassName("usuario")).forEach(e => e.textContent = "" );
+                localStorage.removeItem("usuario");
                 estPantalla("actLogin");
             }
         }
@@ -136,7 +199,9 @@ window.addEventListener("DOMContentLoaded", () => {
             if (xmlhttp.readyState==4){
                 if (xmlhttp.status==200){
                     let d = JSON.parse(xmlhttp.responseText);
-                    Array.from(document.getElementsByClassName("usuario")).forEach(e => e.textContent = d["nomUsu"]+" "+d["apPatUsu"]+" "+d["apMatUsu"] );
+                    let usu = d["nomUsu"]+" "+d["apPatUsu"]+" "+d["apMatUsu"];
+                    Array.from(document.getElementsByClassName("usuario")).forEach(e => e.textContent = usu );
+                    localStorage.setItem("usuario", usu);
                     estPantalla("actMain");
                 } else if (xmlhttp.status==401) noti.error("Usuario o contraseña incorrecta");
                 else noti.error("Faltan datos para iniciar sesión");
@@ -230,7 +295,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (xmlhttp.readyState==4){
                 if (xmlhttp.status==204){
                     noti.success("¡Cliente creado!");
-                    actualTablaClientes();
+                    actualTablaClientes(0);
                 } else if (xmlhttp.status==400) noti.error("Faltan datos para la operación");
                 else noti.error("Hubo un error al registrar al cliente");
             }
@@ -250,6 +315,34 @@ window.addEventListener("DOMContentLoaded", () => {
             "&txtClientesMun="+encodeURIComponent(document.getElementById("txtClientesMun").value)+
             "&txtClientesCP="+encodeURIComponent(document.getElementById("txtClientesCP").value)+
             "&selClientesEdo="+encodeURIComponent(document.getElementById("selClientesEdo").value)
+        );
+    });
+
+    document.querySelector("#actPacientes form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (xmlhttp.readyState==4){
+                if (xmlhttp.status==204){
+                    noti.success("¡Paciente creado!");
+                    actualTablaPacientes();
+                    actualTablaClientes(1);
+                } else if (xmlhttp.status==400) noti.error("Faltan datos para la operación");
+                else noti.error("Hubo un error al registrar al paciente");
+            }
+        }
+        xmlhttp.open("POST", "pacientes");
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send(
+            "txtPacientesNombre="+encodeURIComponent(document.getElementById("txtPacientesNombre").value)+
+            "&selPacientesViaje="+encodeURIComponent(document.getElementById("selPacientesViaje").value)+
+            "&selPacientesConv="+encodeURIComponent(document.getElementById("selPacientesConv").value)+
+            "&txtPacientesFNac="+encodeURIComponent(document.getElementById("txtPacientesFNac").value)+
+            "&txtPacientesRaza="+encodeURIComponent(document.getElementById("txtPacientesRaza").value)+
+            "&selPacientesSexo="+encodeURIComponent(document.getElementById("selPacientesSexo").value)+
+            "&txtPacientesEspecie="+encodeURIComponent(document.getElementById("txtPacientesEspecie").value)+
+            "&txtPacientesMicrochip="+encodeURIComponent(document.getElementById("txtPacientesMicrochip").value)+
+            "&selPacientesDueno="+encodeURIComponent(document.getElementById("selPacientesDueno").value)
         );
     });
 

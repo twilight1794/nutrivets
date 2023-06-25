@@ -127,6 +127,48 @@
             </div>
         </article>
         <article aria-label="Pacientes" id="actPacientes">
+            <div class="formAgregar">
+                <h2>Agregar paciente</h2>
+                <form>
+                    <fieldset>
+                        <label for="txtPacientesNombre">Nombre</label>
+                        <input type="text" id="txtPacientesNombre" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="selPacientesSexo">Sexo</label>
+                        <select data-list="dlSexo" id="selPacientesSexo" required="required"></select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtPacientesEspecie">Especie</label>
+                        <input type="text" id="txtPacientesEspecie" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtPacientesRaza">Raza</label>
+                        <input type="text" id="txtPacientesRaza" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtPacientesFNac">Fecha de nacimiento</label>
+                        <input type="date" id="txtPacientesFNac" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtPacientesMicrochip">Microchip</label>
+                        <input type="text" id="txtPacientesMicrochip" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="selPacientesDueno">Dueño</label>
+                        <select id="selPacientesDueno" required="required"></select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="selPacientesConv">Convivencia</label>
+                        <select data-list="dlBool" id="selPacientesConv" required="required"></select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="selPacientesViaje">Viajes</label>
+                        <select data-list="dlBool" id="selPacientesViaje" required="required"></select>
+                    </fieldset>
+                    <button id="btnPacientesAgregar" data-icono="mas" type="submit"><span>Agregar paciente</span></button>
+                </form>
+            </div>
             <div class="formBusqueda">
                 <h2>Buscar por cliente</h2>
                 <fieldset>
@@ -136,9 +178,9 @@
                     <thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Calle</th><th>Localidad</th><th>CP</th><th>Municipio</th><th>Acciones</th></tr></thead>
                     <tbody></tbody>
                 </table>
-                <h2>Mascotas</h2>
+                <h2>Pacientes</h2>
                 <table>
-                    <thead><tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Raza</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Raza</th><th>Sexo</th><th>Fecha de nacimento</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -316,6 +358,10 @@
         <datalist id="dlSexo">
             <option value="0">Macho</option>
             <option value="1">Hembra</option>
+        </datalist>
+        <datalist id="dlBool">
+            <option value="1">Sí</option>
+            <option value="0">No</option>
         </datalist>
         <datalist id="dlVialidad">
             <option value="1">Ampliación</option>
