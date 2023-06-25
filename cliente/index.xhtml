@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Nutrivets</title>
+        <link rel="stylesheet" href="estilos.css" type="text/css" />
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>NUTRIVETS <span></span></h1>
+            <button id="btnRegresarMenu">Volver al menú</button>
+        </header>
+        <article aria-label="Inicial" id="actMain">
+            <div>
+                <div>
+                    <img src="banner.jpg" />
+                    <p class="usuario">Dra. Ejemplo</p>
+                </div>
+            </div>
+            <div>
+                <img src="logo.jpg" />
+                <div>
+                    <button id="btnMainPacientes">Pacientes</button>
+                    <button id="btnMainInventario">Inventario</button>
+                </div>
+            </div>
+        </article>
+        <article aria-label="Inventario" id="actInv">
+            <div>
+                <div>
+                    <img src="banner.jpg" />
+                    <p class="usuario">Dra. Ejemplo</p>
+                </div>
+            </div>
+            <div>
+                <button id="btnInvMateriales">Materiales</button>
+                <button id="btnInvMedicamentos">Medicamentos</button>
+            </div>
+        </article>
+        <article aria-label="Clientes" id="actClientes">
+            <div class="formAgregar">
+                <h2>Agregar cliente</h2>
+                <form>
+                    <fieldset>
+                        <label for="txtClientesNombre">Nombre</label>
+                        <input type="text" id="txtClientesNombre" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesApPat">Apellido paterno</label>
+                        <input type="text" id="txtClientesApPat" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesApMat">Apellido materno</label>
+                        <input type="text" id="txtClientesApMat" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="selClientesTipoCalle">Tipo de calle</label>
+                        <select data-list="dlVialidad" id="selClientesTipoCalle" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesCalle">Calle</label>
+                        <input type="text" id="txtClientesCalle" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesEmail">Correo electrónico</label>
+                        <input type="text" id="txtClientesEmail" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesTipoLoc">Tipo de localidad</label>
+                        <select data-list="dlLocalidad" id="selClientesTipoLoc" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesLoc">Localidad</label>
+                        <input type="text" id="txtClientesLoc" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesTel">Teléfono</label>
+                        <input type="tel" id="txtClientesTel" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesCP">Código postal</label>
+                        <input type="text" id="txtClientesCP" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtClientesMun">Municipio</label>
+                        <input type="text" id="txtClientesMun" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="selClientesEdo">Estado</label>
+                        <select data-list="dlEstado" id="selClientesEdo" required="required" />
+                    </fieldset>
+                    <button id="btnClientesAgregar" data-icono="mas"><span>Agregar cliente</span></button>
+                </form>
+            </div>
+            <div class="formBusqueda">
+                <h2>Buscar cliente</h2>
+                <fieldset>
+                    <input type="search" id="txtClientesBuscar" />
+                </fieldset>
+                <table>
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Calle</th><th>Localidad</th><th>CP</th><th>Municipio</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </article>
+        <article aria-label="Pacientes" id="actPacientes">
+            <div class="formBusqueda">
+                <h2>Buscar por cliente</h2>
+                <fieldset>
+                    <input type="search" id="txtPacientesBuscar" />
+                </fieldset>
+                <table>
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Calle</th><th>Localidad</th><th>CP</th><th>Municipio</th><th>Acciones</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+                <h2>Mascotas</h2>
+                <table>
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Raza</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </article>
+        <article aria-label="Materiales" id="actMateriales">
+            <div class="formAgregar">
+                <h2>Agregar material</h2>
+                <form>
+                    <fieldset>
+                        <label for="txtMaterialesNombre">Nombre</label>
+                        <input type="text" id="txtMaterialesNombre" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMaterialesForma">Presentación</label>
+                        <input type="text" id="txtMaterialesForma" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMaterialesCantMin">Cantidad (mínima/total)</label>
+                        <div class="pseudoinput"><input type="number" id="txtMaterialesCantMin" size="4" />/<input type="number" id="txtMaterialesCantTot" size="4" /></div>
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMaterialesPrecio">Precio de venta</label>
+                        <input type="number" id="txtMaterialesPrecio" required="required" />
+                    </fieldset>
+                    <button id="btnMaterialesAgregar" data-icono="mas"><span>Agregar materiales</span></button>
+                    <input type="hidden" id="txtInvTipo" value="0" />
+                </form>
+            </div>
+            <div class="formBusqueda">
+                <h2>Buscar material</h2>
+                <fieldset>
+                    <input type="search" id="txtMaterialesBuscar" />
+                </fieldset>
+                <table>
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Existencias</th><th>Precio</th><th>Presentación</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </article>
+        <article aria-label="Medicamentos" id="actMedicamentos">
+            <div class="formAgregar">
+                <h2>Agregar medicamento</h2>
+                <form>
+                    <fieldset>
+                        <label for="txtMedicamentoNombre">Nombre</label>
+                        <input type="text" id="txtMedicamentoNombre" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMedicamentoPrincipio">Principio activo</label>
+                        <input type="text" id="txtMedicamentoPrincipio" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMedicamentoForma">Presentación</label>
+                        <input type="text" id="txtMedicamentoForma" list="dlPresentacionMedicamento" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMedicamentoLab">Laboratorio</label>
+                        <input type="text" id="txtMedicamentoLab" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMedicamentoCantMin">Cantidad (mínima/total)</label>
+                        <div class="pseudoinput"><input type="number" id="txtMedicamentoCantMin" size="4" />/<input type="number" id="txtMedicamentoCantTot" required="required" size="4" /></div>
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtMedicamentoPrecio">Precio de venta</label>
+                        <input type="number" id="txtMedicamentoPrecio" required="required" />
+                    </fieldset>
+                    <button id="btnMedicamentoAgregar" data-icono="mas"><span>Agregar medicamento</span></button>
+                    <input type="hidden" id="txtInvTipo" value="1" />
+                </form>
+            </div>
+            <div class="formBusqueda">
+                <h2>Buscar medicamentos</h2>
+                <fieldset>
+                    <input type="search" id="txtMedicamentosBuscar" />
+                </fieldset>
+                <table>
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Principio activo</th><th>Existencias</th><th>Precio</th><th>Presentación</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </article>
+        <article aria-label="Inicio de sesión" id="actLogin">
+            <img src="logo.jpg" alt="" />
+            <div><form class="esp">
+                <fieldset>
+                    <label for="txtLoginEmail">Correo</label>
+                    <input type="email" id="txtLoginEmail" placeholder="correo@mail.com" required="required" />
+                </fieldset>
+                <fieldset>
+                    <label for="txtLoginContra">Contraseña</label>
+                    <input type="password" id="txtLoginContra" required="required" />
+                </fieldset>
+                <fieldset>
+                    <button class="simple" id="btnLoginRecuperar">Recuperar contraseña</button>
+                </fieldset>
+                <fieldset>
+                    <button class="principal" id="btnLoginLogin">INICIAR SESIÓN</button>
+                    <button class="principal" id="btnLoginRegistrar">REGISTRAR</button>
+                </fieldset>
+            </form></div>
+            <img src="banner.jpg" alt="" />
+        </article>
+        <article aria-label="Registro de usuario" id="actRegistro">
+            <img src="logo.jpg" alt="" />
+            <div class="formAgregar"><form>
+                <fieldset>
+                    <label for="txtRegistroNombre">Nombre</label>
+                    <input type="text" id="txtRegistroNombre" required="required" />
+                </fieldset>
+                <fieldset>
+                    <label for="txtRegistroApPat">Apellido paterno</label>
+                    <input type="text" id="txtRegistroApPat" required="required" />
+                </fieldset>
+                <fieldset>
+                    <label for="txtRegistroApMat">Apellido materno</label>
+                    <input type="text" id="txtRegistroApMat" />
+                </fieldset>
+                <fieldset>
+                    <label for="txtRegistroTel">Teléfono</label>
+                    <input type="text" id="txtRegistroTel" />
+                </fieldset>
+                <fieldset>
+                    <label for="txtRegistroCorreo">Correo</label>
+                    <input type="text" id="txtRegistroCorreo" placeholder="correo@mail.com" />
+                </fieldset>
+                <fieldset>
+                    <label for="txtRegistroContra">Contraseña</label>
+                    <input type="password" id="txtRegistroContra" required="required" />
+                </fieldset>
+                <fieldset>
+                    <label for="txtRegistroContra2">Confirmar contraseña</label>
+                    <input type="password" id="txtRegistroContra2" required="required" />
+                </fieldset>
+                <button data-icono="mas"><span>Crear cuenta</span></button>
+            </form></div>
+            <img src="banner.jpg" alt="" />
+        </article>
+        <footer>
+        <p id="empresa">CAMPANITA SOFTWARE</p>
+        </footer>
+        <!-- Desplegables -->
+        <datalist id="dlEstado">
+            <option>Aguascalientes</option>
+            <option>Baja California</option>
+            <option>Baja California Sur</option>
+            <option>Campeche</option>
+            <option>Chiapas</option>
+            <option>Chihuahua</option>
+            <option>Ciudad de México</option>
+            <option>Coahuila de Zaragoza</option>
+            <option>Colima</option>
+            <option>Durango</option>
+            <option>Guanajuato</option>
+            <option>Guerrero</option>
+            <option>Hidalgo</option>
+            <option>Jalisco</option>
+            <option>Estado de México</option>
+            <option>Michoacán de Ocampo</option>
+            <option>Morelos</option>
+            <option>Nayarit</option>
+            <option>Nuevo León</option>
+            <option>Oaxaca</option>
+            <option>Puebla</option>
+            <option>Querétaro</option>
+            <option>Quintana Roo</option>
+            <option>San Luis Potosí</option>
+            <option>Sinaloa</option>
+            <option>Sonora</option>
+            <option>Tabasco</option>
+            <option>Tamaulipas</option>
+            <option>Tlaxcala</option>
+            <option>Veracruz de Ignacio de la Llave</option>
+            <option>Yucatán</option>
+            <option>Zacatecas</option>
+        </datalist>
+        <datalist id="dlSexo">
+            <option value="false">Macho</option>
+            <option value="true">Hembra</option>
+        </datalist>
+        <datalist id="dlVialidad">
+            <option value="1">Ampliación</option>
+            <option value="2">Andador</option>
+            <option value="3">Avenida</option>
+            <option value="4">Boulevard</option>
+            <option value="5">Calzada</option>
+            <option value="6">Calle</option>
+            <option value="7">Callejón</option>
+            <option value="8">Cerrada</option>
+            <option value="9">Circuito</option>
+            <option value="10">Circunvalación</option>
+            <option value="11">Continuación</option>
+            <option value="12">Corredor</option>
+            <option value="13">Diagonal</option>
+            <option value="14">Eje vial</option>
+            <option value="15">Pasaje</option>
+            <option value="16">Peatonal</option>
+            <option value="17">Periférico</option>
+            <option value="18">Privada</option>
+            <option value="19">Prolongación</option>
+            <option value="20">Retorno</option>
+            <option value="21">Viaducto</option>
+            <option value="0">Otro</option>
+        </datalist>
+        <datalist id="dlLocalidad">
+            <option value="1">Rancho/Finca</option>
+            <option value="2">Caserío</option>
+            <option value="3">Poblado tradicional</option>
+            <option value="4">Desarrollo habitacional</option>
+            <option value="5">Colonia</option>
+            <option value="6">Fraccionamiento</option>
+            <option value="7">Zona o parque industrial</option>
+            <option value="0">Otro</option>
+       </datalist>
+       <datalist id="dlPresentacionMedicamento">
+            <option>Comprimidos</option>
+            <option>Grageas</option>
+            <option>Cápsulas</option>
+            <option>Sobres</option>
+            <option>Jarabe</option>
+            <option>Gotas</option>
+            <option>Ampollas</option>
+            <option>Vial</option>
+            <option>Suspensión</option>
+            <option>Emulsión</option>
+       </datalist>
+    </body>
+</html>

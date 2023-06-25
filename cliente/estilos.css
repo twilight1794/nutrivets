@@ -1,0 +1,304 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&family=Noto+Serif:wght@400;500;700&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: 0;
+    background: transparent;
+}
+:root {
+  --p-f: #0e6981;
+  --p-t: white;
+  --ic-buscar: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path fill="white" d="M783.522-110.913 529.848-364.587q-29.761 23.044-68.642 36.565-38.88 13.522-83.119 13.522-111.152 0-188.326-77.174Q112.587-468.848 112.587-580q0-111.152 77.174-188.326Q266.935-845.5 378.087-845.5q111.152 0 188.326 77.174Q643.587-691.152 643.587-580q0 44.478-13.522 83.12-13.521 38.641-36.565 68.163l253.913 254.152-63.891 63.652ZM378.087-405.5q72.848 0 123.674-50.826Q552.587-507.152 552.587-580q0-72.848-50.826-123.674Q450.935-754.5 378.087-754.5q-72.848 0-123.674 50.826Q203.587-652.848 203.587-580q0 72.848 50.826 123.674Q305.239-405.5 378.087-405.5Z"/></svg>');
+  --ic-mas: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path fill="white" d="M434.5-194.5v-240h-240v-91h240v-240h91v240h240v91h-240v240h-91Z"/></svg>');
+}
+body {
+    display: flex;
+    flex-direction: column;
+    accent-color: var(--p-f);
+    font-family: "IBM Plex Sans", sans-serif;
+}
+html, body {
+    height: 100%;
+}
+body>footer, body>header {
+    background: var(--p-f);
+    color: var(--p-t);
+    font-family: "Noto Serif", serif;
+}
+body>header{
+    padding-block: .25rem;
+    padding-inline: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+h1 { font-weight: normal; }
+h1 span {
+    display: inline-block;
+    margin-left: 1rem;
+    font-size: .5em;
+}
+h2 {
+    font-family: "Noto Serif", sans-serif;
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: var(--p-f);
+    margin-bottom: .5rem;
+}
+h2:not(:first-child){ margin-top: 3rem; }
+body>footer{
+    padding-bottom: .5rem;
+    padding-top: 4rem;
+    padding-inline: 1rem;
+}
+
+body>article {
+    display: none;
+}
+body>article[aria-active]{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    overflow: auto;
+    align-items: center;
+}
+body>article:not(#actLogin, #actRegistro)>div{
+    width: 100%;
+}
+button {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 500;
+    border: 0;
+}
+button[data-icono] span {
+    padding-left: 1rem;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+button[data-icono="mas"] span{
+    background-image: var(--ic-mas);
+}
+fieldset {
+    border: none;
+}
+input[type="number"] {
+    appearance: textfield;
+    text-align: center;
+}
+
+.formAgregar, .formBusqueda { padding: 3rem; }
+.formAgregar form {
+    display: grid;
+    gap: 1rem;
+}
+.formAgregar fieldset {
+    border: 3px var(--p-f) solid;
+    background: #f7fbfa;
+    padding: .5rem;
+    border-radius: .25rem;
+}
+.formAgregar fieldset>label {
+    color: var(--p-f);
+    font-weight: 500;
+    font-size: .8rem;
+}
+.formAgregar fieldset>:is(input, select, .pseudoinput) {
+    border: 0;
+    background: transparent;
+    color: gray;
+    width: 100%;
+}
+.formAgregar fieldset>.pseudoinput>:is(input, select) {
+    border: 0;
+    background: transparent;
+    color: gray;
+}
+.formAgregar button {
+    color: var(--p-t);
+    font-weight: bold;
+    font-size: .8rem;
+    background: var(--p-f);
+    height: 4rem;
+    padding: .5rem;
+    border-radius: .25rem;
+}
+.formBusqueda fieldset {
+    display: inline-block;
+    background-color: var(--p-f);
+    border-radius: 2rem;
+    padding: .25rem;
+    padding-right: 3rem;
+    background-image: var(--ic-buscar);
+    background-position: center right .5rem;
+    background-repeat: no-repeat;
+}
+.formBusqueda fieldset input {
+    border: 0;
+    padding: .25rem;
+    border-radius: 2rem;
+    background: white;
+}
+.formBusqueda table {
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    margin-inline: auto;
+}
+.formBusqueda th {
+    background: var(--p-f);
+    font-family: "Noto Serif", serif;
+    font-weight: normal;
+    color: var(--p-t);
+    padding: 1rem;
+}
+.formBusqueda td {
+    background: #d9d9d9;
+    padding: 1rem;
+}
+.formBusqueda :is(td, th):not(:last-child){
+    border-right: 1px white solid;
+}
+
+#actClientes .formAgregar form {
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
+}
+#actClientes .formAgregar>form>:nth-child(1) { grid-area: 1 / 1; }
+#actClientes .formAgregar>form>:nth-child(2) { grid-area: 2 / 1; }
+#actClientes .formAgregar>form>:nth-child(3) { grid-area: 3 / 1; }
+#actClientes .formAgregar>form>:nth-child(4) { grid-area: 1 / 2; }
+#actClientes .formAgregar>form>:nth-child(5) { grid-area: 2 / 2; }
+#actClientes .formAgregar>form>:nth-child(6) { grid-area: 3 / 2; }
+#actClientes .formAgregar>form>:nth-child(7) { grid-area: 1 / 3; }
+#actClientes .formAgregar>form>:nth-child(8) { grid-area: 2 / 3; }
+#actClientes .formAgregar>form>:nth-child(9) { grid-area: 3 / 3; }
+#actClientes .formAgregar>form>:nth-child(10) { grid-area: 1 / 4; }
+#actClientes .formAgregar>form>:nth-child(11) { grid-area: 2 / 4; }
+#actClientes .formAgregar>form>:nth-child(12) { grid-area: 3 / 4; }
+#actClientes .formAgregar>form>:nth-child(13) { grid-area: 4 / 4; }
+
+#actPacientes .formAgregar form {
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: repeat(4, 1fr);
+}
+#actMedicamentos .formAgregar form {
+    grid-template-rows: repeat(3, auto);
+    grid-template-columns: repeat(3, 1fr);
+}
+#actMedicamentos .formAgregar>form>:nth-child(7) { grid-area: 3 / 3; }
+#actMateriales .formAgregar form {
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(4, 1fr);
+}
+#actMateriales .formAgregar>form>:nth-child(1) { grid-area: 1 / 1; }
+#actMateriales .formAgregar>form>:nth-child(2) { grid-area: 1 / 2; }
+#actMateriales .formAgregar>form>:nth-child(3) { grid-area: 1 / 3; }
+#actMateriales .formAgregar>form>:nth-child(4) { grid-area: 1 / 4; }
+#actMateriales .formAgregar>form>:nth-child(5) { grid-area: 2 / 4; }
+
+:is(#actLogin, #actRegistro) img[src^=logo]{
+    max-width: 400px;
+    margin-top: 2rem;
+}
+:is(#actLogin, #actRegistro) img[src^=banner]{ max-width: 700px; }
+:is(#actLogin, #actRegistro)>div{
+    flex-grow: 1;
+    display: grid;
+    min-width: 24rem;
+}
+#actRegistro form {
+    align-self: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 4rem;
+}
+form.esp {
+    background: #0e698147;
+    border: rgba(14, 105, 129, .28) solid 2px;
+    padding-block: 1rem;
+    padding-inline: 3rem;
+    align-self: center;
+    border-radius: 2.5rem;
+}
+form.esp fieldset>*{
+    display: block;
+    padding: .5rem;
+    border-radius: .5rem;
+    width: 100%;
+}
+form.esp label {
+    font-size: larger;
+    color: white;
+    padding-left: 0;
+    padding-bottom: .5rem;
+}
+form.esp input {
+    background: white;
+    border: 1px solid gray;
+    color: gray;
+}
+form.esp button { margin-top: .5rem; }
+form.esp button:not(.simple){
+    background: var(--p-f);
+    color: var(--p-t);
+}
+form.esp button.simple {
+    font-size: smaller;
+    text-align: left;
+    color: white;
+    margin-top: 0;
+    padding-left: 0;
+}
+
+.usuario {
+    font-family: "Noto Serif", serif;
+    color: var(--p-f);
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+:is(#actMain, #actInv)>div:nth-child(1)>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: gray 1px solid;
+    margin-inline: 2rem;
+}
+:is(#actMain, #actInv)>div:nth-child(2){
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-grow: 1;
+}
+:is(#actMain, #actInv)>div:nth-child(2) button{
+    font-family: "Noto Serif", serif;
+    color: var(--p-f);
+    font-size: 1.25rem;
+    min-width: 15rem;
+}
+:is(#actMain, #actInv) img[src^=banner]{
+    max-width: 25rem;
+}
+#actMain img[src^=logo]{
+    max-width: 25rem;
+}
+
+#btnMainPacientes, #btnMainInventario,
+#btnInvMateriales, #btnInvMedicamentos {
+    display: inline-block;
+    padding-top: 17rem;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+#btnMainPacientes { background-image: url("pacientes.png") }
+#btnMainInventario { background-image: url("inventario.png") }
+#btnInvMateriales { background-image: url("materiales.png") }
+#btnInvMedicamentos { background-image: url("medicamentos.png") }
+
+#btnRegresarMenu {
+    background: var(--p-t);
+    color: var(--p-f);
+    border-radius: .5rem;
+    padding-inline: 1rem;
+}
