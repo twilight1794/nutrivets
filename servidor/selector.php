@@ -45,6 +45,8 @@ if (str_starts_with($uri[0], "pacientes")){
     require "pacientes.php";
 } else if (str_starts_with($uri[0], "clientes")){
     require "clientes.php";
+    if ($metodo == "GET") Clientes_GET();
+    else if ($metodo == "POST") Clientes_POST();
 } else if (str_starts_with($uri[0], "cliente")){
     require "clientes.php";
 } else if (str_starts_with($uri[0], "inventario")){

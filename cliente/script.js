@@ -1,4 +1,29 @@
 "use strict"
+function actualTablaClientes(){
+    let tbl = document.querySelector("#actClientes .formBusqueda tbody");
+    tbl.textContent = "";
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                d.forEach((e) => {
+                    let fila = tbl.insertRow();
+                    fila.insertCell(-1).textContent = e["idCte"];
+                    fila.insertCell(-1).textContent = e["nomCte"] + " " + e["apPatCte"] + " " + e["apMatCte"];
+                    fila.insertCell(-1).textContent = e["telCte"];
+                    console.log(Array.from(document.getElementById("dlVialidad").children).find((e2) => e2.value == e["tipoCalleCte"]));
+                    fila.insertCell(-1).textContent = Array.from(document.getElementById("dlVialidad").children).find((e2) => e2.value == e["tipoCalleCte"]).textContent + " " + e["calleCte"];
+                    fila.insertCell(-1).textContent = Array.from(document.getElementById("dlLocalidad").children).find((e2) => e2.value == e["tipoPobCte"]).textContent + " " + e["pobCte"];
+                    fila.insertCell(-1).textContent = e["cpCte"];
+                    fila.insertCell(-1).textContent = e["munCte"] + Array.from(document.getElementById("dlEstado").children).find((e2) => e2.value == e["edoCte"]).textContent;
+                });
+            } else noti.error("Error al recuperar la lista de clientes");
+        }
+    }
+    xmlhttp.open("GET", "clientes");
+    xmlhttp.send();
+}
 
 function actualTablaInventario(tipo){
     let tbl = document.querySelector(((tipo==1)?"#actMedicamentos":"#actMateriales")+" .formBusqueda tbody");
@@ -52,7 +77,7 @@ function estPantalla(id){
         // Actualización de listados
         switch (id){
             case "actClientes":
-                break;
+                actualTablaClientes(); break;
             case "actPacientes":
                 break;
             case "actMateriales":
@@ -81,7 +106,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Métodos de botones
     document.getElementById("btnRegresarMenu").addEventListener("click", () => estPantalla("actMain") );
-    document.getElementById("btnMainPacientes").addEventListener("click", () => estPantalla("actPacientes"));
+    document.getElementById("btnMainPacientesMenu").addEventListener("click", () => estPantalla("actPacientesMenu"));
+    document.getElementById("btnPAcientesMClientes").addEventListener("click", () => estPantalla("actClientes") );
+    document.getElementById("btnPacientesMPacientes").addEventListener("click", () => estPantalla("actPacientes") );
+    document.getElementById("btnPacientesMConsultaNueva").addEventListener("click", () => estPantalla("actMain") );
+    document.getElementById("btnPacientesMConsultas").addEventListener("click", () => estPantalla("actMain") );
     document.getElementById("btnMainInventario").addEventListener("click", () => estPantalla("actInv"));
     document.getElementById("btnInvMateriales").addEventListener("click", () => estPantalla("actMateriales"));
     document.getElementById("btnInvMedicamentos").addEventListener("click", () => estPantalla("actMedicamentos"));
@@ -191,6 +220,36 @@ window.addEventListener("DOMContentLoaded", () => {
             "&txtInvPrecio="+encodeURIComponent(document.getElementById("txtMaterialesPrecio").value)+
             "&txtMaterialesNombre="+encodeURIComponent(document.getElementById("txtMaterialesNombre").value)+
             "&txtMaterialesForma="+encodeURIComponent(document.getElementById("txtMaterialesForma").value)+"&txtInvTipo=0"
+        );
+    });
+
+    document.querySelector("#actClientes form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (xmlhttp.readyState==4){
+                if (xmlhttp.status==204){
+                    noti.success("¡Cliente creado!");
+                    actualTablaClientes();
+                } else if (xmlhttp.status==400) noti.error("Faltan datos para la operación");
+                else noti.error("Hubo un error al registrar al cliente");
+            }
+        }
+        xmlhttp.open("POST", "clientes");
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send(
+            "txtClientesTel="+encodeURIComponent(document.getElementById("txtClientesTel").value)+
+            "&txtClientesNombre="+encodeURIComponent(document.getElementById("txtClientesNombre").value)+
+            "&txtClientesApPat="+encodeURIComponent(document.getElementById("txtClientesApPat").value)+
+            "&txtClientesApMat="+encodeURIComponent(document.getElementById("txtClientesApMat").value)+
+            "&txtClientesEmail="+encodeURIComponent(document.getElementById("txtClientesEmail").value)+
+            "&txtClientesCalle="+encodeURIComponent(document.getElementById("txtClientesCalle").value)+
+            "&selClientesTipoCalle="+encodeURIComponent(document.getElementById("selClientesTipoCalle").value)+
+            "&txtClientesLoc="+encodeURIComponent(document.getElementById("txtClientesLoc").value)+
+            "&selClientesTipoLoc="+encodeURIComponent(document.getElementById("selClientesTipoLoc").value)+
+            "&txtClientesMun="+encodeURIComponent(document.getElementById("txtClientesMun").value)+
+            "&txtClientesCP="+encodeURIComponent(document.getElementById("txtClientesCP").value)+
+            "&selClientesEdo="+encodeURIComponent(document.getElementById("selClientesEdo").value)
         );
     });
 

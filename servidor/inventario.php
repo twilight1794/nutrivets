@@ -52,7 +52,7 @@ function Inventario_POST(){
         echo "Faltan datos para la operación";
         exit();
     }
-    $consulta = "INSERT INTO `inventario` (`minCantInv`, `cantInv`, `precioInv`) VALUES (".$_POST['txtInvCantMin'].",".$_POST['txtInvCantTot'].",".$_POST['txtInvPrecio'].")";
+    $consulta = "INSERT INTO `inventario` (`minCantInv`, `cantInv`, `precioInv`) VALUES ('".$_POST['txtInvCantMin']."','".$_POST['txtInvCantTot']."','".$_POST['txtInvPrecio']."')";
     if ($resultado = $mysqli->query($consulta)){
         $tipo = $_POST['txtInvTipo'];
         if ($tipo == "0"){

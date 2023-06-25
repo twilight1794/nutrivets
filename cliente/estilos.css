@@ -255,7 +255,7 @@ form.esp button.simple {
     font-weight: 500;
     font-size: 1.25rem;
 }
-:is(#actMain, #actInv)>div:nth-child(1)>div{
+:is(#actMain, #actInv, #actPacientesMenu)>div:nth-child(1)>div{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -274,14 +274,14 @@ form.esp button.simple {
     font-size: 1.25rem;
     min-width: 15rem;
 }
-:is(#actMain, #actInv) img[src^=banner]{
+:is(#actMain, #actInv, #actPacientesMenu) img[src^=banner]{
     max-width: 25rem;
 }
 #actMain img[src^=logo]{
     max-width: 25rem;
 }
 
-#btnMainPacientes, #btnMainInventario,
+#btnMainPacientesMenu, #btnMainInventario,
 #btnInvMateriales, #btnInvMedicamentos {
     display: inline-block;
     padding-top: 17rem;
@@ -289,7 +289,7 @@ form.esp button.simple {
     background-repeat: no-repeat;
     background-size: contain;
 }
-#btnMainPacientes { background-image: url("pacientes.png"); }
+#btnMainPacientesMenu { background-image: url("pacientes.png"); }
 #btnMainInventario { background-image: url("inventario.png"); }
 #btnInvMateriales { background-image: url("materiales.png"); }
 #btnInvMedicamentos { background-image: url("medicamentos.png"); }
@@ -300,4 +300,31 @@ form.esp button.simple {
     border-radius: .5rem;
     padding-inline: 1rem;
     height: 100%;
+}
+
+#actPacientesMenu>div:nth-child(2){
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+}
+#actPacientesMenu h2 {
+    margin-bottom: 3rem;
+    font-size: 3rem;
+    text-transform: none;
+    font-weight: 500;
+}
+.menuBotones {
+    display: grid;
+    place-content: center;
+    gap: 1rem;
+}
+.menuBotones button {
+    background: var(--p-f);
+    color: var(--p-t);
+    min-width: 24rem;
+    padding: 1rem;
+    border-radius: .5rem;
+    font-size: 1.25rem;
 }
