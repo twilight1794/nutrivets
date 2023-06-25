@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
     <head>
         <title>Nutrivets</title>
         <link rel="stylesheet" href="estilos.css" type="text/css" />
+        <link rel="stylesheet" href="notyf.min.css" type="text/css" />
         <script src="script.js"></script>
+        <script src="notyf.min.js"></script>
     </head>
     <body>
         <header>
             <h1>NUTRIVETS <span></span></h1>
-            <button id="btnRegresarMenu">Volver al menú</button>
+            <div>
+                <button id="btnRegresarMenu">Volver al menú</button>
+                <button id="btnCerrarSesion">Cerrar sesión</button>
+            </div>
         </header>
         <article aria-label="Inicial" id="actMain">
             <div>
                 <div>
                     <img src="banner.jpg" />
-                    <p class="usuario">Dra. Ejemplo</p>
+                    <p class="usuario"></p>
                 </div>
             </div>
             <div>
@@ -30,7 +35,7 @@
             <div>
                 <div>
                     <img src="banner.jpg" />
-                    <p class="usuario">Dra. Ejemplo</p>
+                    <p class="usuario"></p>
                 </div>
             </div>
             <div>
@@ -214,8 +219,8 @@
                     <button class="simple" id="btnLoginRecuperar">Recuperar contraseña</button>
                 </fieldset>
                 <fieldset>
-                    <button class="principal" id="btnLoginLogin">INICIAR SESIÓN</button>
-                    <button class="principal" id="btnLoginRegistrar">REGISTRAR</button>
+                    <button class="principal" id="btnLoginLogin" type="submit">INICIAR SESIÓN</button>
+                    <button class="principal" id="btnLoginRegistrar" type="button">REGISTRARSE</button>
                 </fieldset>
             </form></div>
             <img src="banner.jpg" alt="" />
@@ -251,7 +256,7 @@
                     <label for="txtRegistroContra2">Confirmar contraseña</label>
                     <input type="password" id="txtRegistroContra2" required="required" />
                 </fieldset>
-                <button data-icono="mas"><span>Crear cuenta</span></button>
+                <button data-icono="mas" type="submit"><span>Crear cuenta</span></button>
             </form></div>
             <img src="banner.jpg" alt="" />
         </article>

@@ -35,15 +35,6 @@ function verificarSesion(){
 $metodo = $_SERVER['REQUEST_METHOD'];
 $uri = explode("/", substr($_SERVER['REQUEST_URI'], 1));
 
-if (count($uri) == 0){
-    http_response_code(400);
-    echo "No URI";
-    exit();
-}
-echo $metodo;
-echo var_dump($uri);
-exit();
-
 switch ($uri[0]){
     case "pacientes":
         require "pacientes.php";
@@ -68,15 +59,18 @@ switch ($uri[0]){
         break;
     case "usuarios":
         require "usuarios.php";
+        if ($metodo == "POST") Usuarios_POST();
         break;
-    case "usuario":
-        require "usuarios.php";
-        break;
+    #case "usuario":
+    #    require "usuarios.php";
+    #    break;
     case "sesion":
-        
+        require "sesion.php";
+        if ($metodo == "POST") Sesion_POST();
+        else if ($metodo == "DELETE") Sesion_DELETE();
+        break;
     default:
         die("URI desconocida");
         break;
 }
-
 ?>
