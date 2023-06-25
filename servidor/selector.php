@@ -9,11 +9,11 @@ if ($mysqli->connect_errno) die("Fallo al conectar a MySQL: " . $mysqli->connect
 // Verificar sesión
 function verificarSesion(){
     if (isset($_COOKIE['usuario']) and isset($_COOKIE['sesion'])){
-        $consulta = "SELECT * FROM `usuarios` WHERE emailUsu = \"$_COOKIE['usuario']\"";
+        $consulta = "SELECT * FROM `usuarios` WHERE emailUsu = \"".$_COOKIE['usuario']."\"";
         $resultado = $mysqli->query($consulta);
         if ($result->num_rows > 0){
             $fila = $resultado->fetch_assoc();
-            $hash = sha1($_COOKIE['usuario']..$_COOKIE['contra']);
+            $hash = sha1($_COOKIE['usuario'].$_COOKIE['contra']);
             if ($fila['contraUsu'] != $hash){
                 http_response_code(401);
                 echo "Contraseña errónea";
@@ -41,7 +41,7 @@ if (count($uri) == 0){
     exit();
 }
 echo $metodo;
-echo $uri;
+echo var_dump($uri);
 exit();
 
 switch ($uri[0]){

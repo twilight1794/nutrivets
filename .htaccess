@@ -1,0 +1,11 @@
+RewriteEngine On
+
+RewriteBase /
+RewriteRule ^phpmyadmin - [L,NC]
+RewriteRule ^(.*).jpg$ cliente/$1.jpg [END,QSA]
+RewriteRule ^(.*).png$ cliente/$1.png [END,QSA]
+RewriteRule ^(.*).css$ cliente/$1.css [END,QSA]
+RewriteRule ^(.*).js$ cliente/$1.js [END,QSA]
+RewriteRule ^/?$ cliente/index.xhtml [END,QSA]
+RewriteRule ^(.*).xhtml$ cliente/$1.xhtml [END,QSA]
+RewriteRule ^(.*)$ servidor/selector.php?ruta=$1 [END,QSA]
