@@ -19,12 +19,12 @@
         <article aria-label="Inicial" id="actMain">
             <div>
                 <div>
-                    <img src="banner.jpg" />
+                    <img src="banner.jpg" alt="" />
                     <p class="usuario"></p>
                 </div>
             </div>
             <div>
-                <img src="logo.jpg" />
+                <img src="logo.jpg" alt="" />
                 <div>
                     <button id="btnMainPacientes">Pacientes</button>
                     <button id="btnMainInventario">Inventario</button>
@@ -34,7 +34,7 @@
         <article aria-label="Inventario" id="actInv">
             <div>
                 <div>
-                    <img src="banner.jpg" />
+                    <img src="banner.jpg" alt="" />
                     <p class="usuario"></p>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             <div class="formBusqueda">
                 <h2>Buscar cliente</h2>
                 <fieldset>
-                    <input type="search" id="txtClientesBuscar" />
+                    <input type="search" id="txtClientesBuscar" aria-label="Buscar cliente" />
                 </fieldset>
                 <table>
                     <thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Calle</th><th>Localidad</th><th>CP</th><th>Municipio</th></tr></thead>
@@ -113,7 +113,7 @@
             <div class="formBusqueda">
                 <h2>Buscar por cliente</h2>
                 <fieldset>
-                    <input type="search" id="txtPacientesBuscar" />
+                    <input type="search" id="txtPacientesBuscar" aria-label="Buscar paciente" />
                 </fieldset>
                 <table>
                     <thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Calle</th><th>Localidad</th><th>CP</th><th>Municipio</th><th>Acciones</th></tr></thead>
@@ -140,20 +140,19 @@
                     </fieldset>
                     <fieldset>
                         <label for="txtMaterialesCantMin">Cantidad (mínima/total)</label>
-                        <div class="pseudoinput"><input type="number" id="txtMaterialesCantMin" size="4" />/<input type="number" id="txtMaterialesCantTot" size="4" /></div>
+                        <div class="pseudoinput"><input type="number" id="txtMaterialesCantMin" size="4" />/<input type="number" id="txtMaterialesCantTot" size="4" aria-label="Cantidad mínima" /></div>
                     </fieldset>
                     <fieldset>
                         <label for="txtMaterialesPrecio">Precio de venta</label>
-                        <input type="number" id="txtMaterialesPrecio" required="required" />
+                        <input type="number" id="txtMaterialesPrecio" step=".01" required="required" />
                     </fieldset>
-                    <button id="btnMaterialesAgregar" data-icono="mas"><span>Agregar materiales</span></button>
-                    <input type="hidden" id="txtInvTipo" value="0" />
+                    <button id="btnMaterialesAgregar" data-icono="mas" type="submit"><span>Agregar materiales</span></button>
                 </form>
             </div>
             <div class="formBusqueda">
                 <h2>Buscar material</h2>
                 <fieldset>
-                    <input type="search" id="txtMaterialesBuscar" />
+                    <input type="search" id="txtMaterialesBuscar" aria-label="Buscar material" />
                 </fieldset>
                 <table>
                     <thead><tr><th>ID</th><th>Nombre</th><th>Existencias</th><th>Precio</th><th>Presentación</th></tr></thead>
@@ -183,20 +182,19 @@
                     </fieldset>
                     <fieldset>
                         <label for="txtMedicamentoCantMin">Cantidad (mínima/total)</label>
-                        <div class="pseudoinput"><input type="number" id="txtMedicamentoCantMin" size="4" />/<input type="number" id="txtMedicamentoCantTot" required="required" size="4" /></div>
+                        <div class="pseudoinput"><input type="number" id="txtMedicamentoCantMin" size="4" />/<input type="number" id="txtMedicamentoCantTot" required="required" size="4" aria-label="Cantidad mínima" /></div>
                     </fieldset>
                     <fieldset>
                         <label for="txtMedicamentoPrecio">Precio de venta</label>
-                        <input type="number" id="txtMedicamentoPrecio" required="required" />
+                        <input type="number" id="txtMedicamentoPrecio" step=".01" required="required" />
                     </fieldset>
-                    <button id="btnMedicamentoAgregar" data-icono="mas"><span>Agregar medicamento</span></button>
-                    <input type="hidden" id="txtInvTipo" value="1" />
+                    <button id="btnMedicamentoAgregar" data-icono="mas" type="submit"><span>Agregar medicamento</span></button>
                 </form>
             </div>
             <div class="formBusqueda">
                 <h2>Buscar medicamentos</h2>
                 <fieldset>
-                    <input type="search" id="txtMedicamentosBuscar" />
+                    <input type="search" id="txtMedicamentosBuscar" aria-label="Buscar medicamento" />
                 </fieldset>
                 <table>
                     <thead><tr><th>ID</th><th>Nombre</th><th>Principio activo</th><th>Existencias</th><th>Precio</th><th>Presentación</th></tr></thead>
@@ -216,7 +214,7 @@
                     <input type="password" id="txtLoginContra" required="required" />
                 </fieldset>
                 <fieldset>
-                    <button class="simple" id="btnLoginRecuperar">Recuperar contraseña</button>
+                    <button class="simple" id="btnLoginRestablecer" type="button">Restablecer contraseña</button>
                 </fieldset>
                 <fieldset>
                     <button class="principal" id="btnLoginLogin" type="submit">INICIAR SESIÓN</button>

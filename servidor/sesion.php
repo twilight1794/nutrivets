@@ -3,7 +3,7 @@
 function Sesion_POST(){
     global $mysqli;
     if (isset($_POST['usuario']) and isset($_POST['contra'])){
-        $consulta = "SELECT * FROM `usuarios` WHERE emailUsu = \"".$_POST['usuario']."\"";
+        $consulta = "SELECT * FROM `usuarios` WHERE emailUsu = \"".$_POST['usuario']."\";";
         $resultado = $mysqli->query($consulta);
         if ($resultado->num_rows > 0){
             $fila = $resultado->fetch_assoc();

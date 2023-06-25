@@ -3,6 +3,10 @@ ini_set('display_startup_errors', 1);
 ini_set('display_errors', 1);
 error_reporting(-1);
 
+function str_starts_with($h, $n){
+    return (strncmp($h, $n, strlen($n)) === 0);
+}
+
 $mysqli = new mysqli("localhost", "nutrivets", "nutrivets", "nutrivets");
 if ($mysqli->connect_errno) die("Fallo al conectar a MySQL: " . $mysqli->connect_error);
 
@@ -35,42 +39,33 @@ function verificarSesion(){
 $metodo = $_SERVER['REQUEST_METHOD'];
 $uri = explode("/", substr($_SERVER['REQUEST_URI'], 1));
 
-switch ($uri[0]){
-    case "pacientes":
-        require "pacientes.php";
-        break;
-    case "paciente":
-        require "pacientes.php";
-        break;
-    case "clientes":
-        require "clientes.php";
-        break;
-    case "cliente":
-        require "clientes.php";
-        break;
-    case "inventario":
-        require "inventario.php";
-        if (count($uri) > 2){
-            
-        } else {
-            if ($metodo == "GET") Inventario.GET();
-            else if ($metodo == "POST") Inventario.POST();
-        }
-        break;
-    case "usuarios":
-        require "usuarios.php";
-        if ($metodo == "POST") Usuarios_POST();
-        break;
-    #case "usuario":
-    #    require "usuarios.php";
-    #    break;
-    case "sesion":
-        require "sesion.php";
-        if ($metodo == "POST") Sesion_POST();
-        else if ($metodo == "DELETE") Sesion_DELETE();
-        break;
-    default:
-        die("URI desconocida");
-        break;
+if (str_starts_with($uri[0], "pacientes")){
+    require "pacientes.php";
+} else if (str_starts_with($uri[0], "paciente")){
+    require "pacientes.php";
+} else if (str_starts_with($uri[0], "clientes")){
+    require "clientes.php";
+} else if (str_starts_with($uri[0], "cliente")){
+    require "clientes.php";
+} else if (str_starts_with($uri[0], "inventario")){
+    require "inventario.php";
+    if (count($uri) > 2){
+        if ($metodo == "DELETE") Inventario_x_DELETE();
+    } else {
+        if ($metodo == "GET") Inventario_GET();
+        else if ($metodo == "POST") Inventario_POST();
+    }
+} else if (str_starts_with($uri[0], "usuarios")){
+    require "usuarios.php";
+    if ($metodo == "POST") Usuarios_POST();
+} else if (str_starts_with($uri[0], "usuario")){
+    require "usuarios.php";
+} else if (str_starts_with($uri[0], "sesion")){
+    require "sesion.php";
+    if ($metodo == "POST") Sesion_POST();
+    else if ($metodo == "DELETE") Sesion_DELETE();
+} else {
+    http_response_code(400);
+    echo "URI desconocida: ".$_SERVER['REQUEST_URI'];
 }
 ?>

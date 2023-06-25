@@ -84,10 +84,8 @@ button[data-icono="mas"] span{
 fieldset {
     border: none;
 }
-input[type="number"] {
-    appearance: textfield;
-    text-align: center;
-}
+input[type="number"]{ appearance: textfield; }
+input[type="number"][size]{ text-align: center; }
 
 .formAgregar, .formBusqueda { padding: 3rem; }
 .formAgregar form {
