@@ -13,6 +13,9 @@
             <h1>NUTRIVETS <span></span></h1>
             <div>
                 <button id="btnRegresarMenu">Volver al menú</button>
+                <button id="btnRegresarMenuPaciente">Volver al menú de paciente</button>
+                <button id="btnRegresarPerfilPaciente">Volver al perfil</button>
+                <button id="btnConsultarCarnet">Consultar carnet</button>
                 <button id="btnCerrarSesion">Cerrar sesión</button>
             </div>
         </header>
@@ -147,6 +150,10 @@
                         <input type="text" id="txtPacientesRaza" required="required" />
                     </fieldset>
                     <fieldset>
+                        <label for="selPacientesDueno">Dueño</label>
+                        <select id="selPacientesDueno" required="required"></select>
+                    </fieldset>
+                    <fieldset>
                         <label for="txtPacientesFNac">Fecha de nacimiento</label>
                         <input type="date" id="txtPacientesFNac" required="required" />
                     </fieldset>
@@ -155,8 +162,12 @@
                         <input type="text" id="txtPacientesMicrochip" />
                     </fieldset>
                     <fieldset>
-                        <label for="selPacientesDueno">Dueño</label>
-                        <select id="selPacientesDueno" required="required"></select>
+                        <label for="arcPacientesImagen">Imagen</label>
+                        <div class="pseudoarc">
+                            <input type="text" id="arcPacientesImagenLabel" readonly="readonly" aria-label="Nombre de la imagen del perro" placeholder="Ninguno" />
+                            <input type="file" id="arcPacientesImagen" accept="image/*" />
+                            <button type="button">X</button>
+                        </div>
                     </fieldset>
                     <fieldset>
                         <label for="selPacientesConv">Convivencia</label>
@@ -180,7 +191,7 @@
                 </table>
                 <h2>Pacientes</h2>
                 <table>
-                    <thead><tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Raza</th><th>Sexo</th><th>Fecha de nacimento</th></tr></thead>
+                    <thead><tr><th>ID</th><th>Nombre</th><th>Especie</th><th>Raza</th><th>Sexo</th><th>Fecha de nacimento</th><th>Acciones</th></tr></thead>
                     <tbody></tbody>
                 </table>
             </div>
@@ -259,6 +270,84 @@
                     <thead><tr><th>ID</th><th>Nombre</th><th>Principio activo</th><th>Existencias</th><th>Precio</th><th>Presentación</th></tr></thead>
                     <tbody></tbody>
                 </table>
+            </div>
+        </article>
+        <article aria-label="Perfil de paciente" id="actPerfilMascota">
+            <figure>
+                <img src="" alt="Imagen de la mascota" />
+            </figure>
+            <dt aria-label="Datos del paciente">
+                <div><dt>Nombre</dt><dd></dd></div>
+                <div><dt>ID</dt><dd></dd></div>
+                <div><dt>Fecha de nacimiento</dt><dd></dd></div>
+                <div><dt>Especie</dt><dd></dd></div>
+                <div><dt>Raza</dt><dd></dd></div>
+                <div><dt>Sexo</dt><dd></dd></div>
+                <div><dt>Convivencia</dt><dd></dd></div>
+                <div><dt>Viaje</dt><dd></dd></div>
+                <div><dt>Microchip</dt><dd></dd></div>
+            </dt>
+            <h2>Consultas</h2>
+            <table>
+                <thead><tr><th>ID</th><th>Fecha</th><th>Doctor</th><th>Motivo</th><th>Descripción</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </article>
+        <article aria-label="Consultas" id="actConsultas"></article>
+        <article aria-label="Nueva consulta" id="actConsultaNueva">
+            <div class="formAgregar">
+                <h2>Consulta</h2>
+                <form id="frmNuevaConsulta">
+                    <h3>Paciente</h3>
+                    <fieldset>
+                        <label for="selConsultaNuevaCliente">Cliente</label>
+                        <select id="selConsultaNuevaCliente" required="required"></select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="selConsultaNuevaPaciente">Paciente</label>
+                        <select id="selConsultaNuevaPaciente" required="required"></select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtConsultaNuevaFIngreso">Fecha de ingreso</label>
+                        <input type="date" id="txtConsultaNuevaFIngreso" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtConsultaNuevaFEgreso">Fecha de egreso</label>
+                        <input type="date" id="txtConsultaNuevaFEgreso" required="required" />
+                    </fieldset>
+                    <h3>Consulta</h3>
+                    <fieldset>
+                        <label for="selConsultaNuevaDoctor">Doctor veterinario</label>
+                        <select id="selConsultaNuevaDoctor" required="required"></select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtConsultaNuevaMotivo">Motivo</label>
+                        <input type="text" id="txtConsultaNuevaMotivo" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="txtConsultaNuevaPrecio">Precio de la consulta</label>
+                        <input type="number" id="selConsultaNuevaDoctor" step=".01" required="required" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="textConsultaNuevaDescripcion">Descripción</label>
+                        <textarea id="textConsultaNuevaDescripcion"></textarea>
+                    </fieldset>
+                    <h3>Medicamentos</h3>
+                    <div>
+                        <fieldset>
+                            <label for="selConsultaNuevaMedicamento-1">Medicamento</label>
+                            <select id="selConsultaNuevaMedicamento-1"></select>
+                        </fieldset>
+                        <fieldset>
+                            <label for="txtConsultaNuevaMedicamentoInd-1">Medicamento</label>
+                            <input type="text" id="txtConsultaNuevaMedicamentoInd-1" />
+                        </fieldset>
+                    </div>
+                </form>
+                <div>
+                    <button id="btnConsultaNuevaAnadMed" type="button" form="frmNuevaConsulta">Añadir medicamento</button>
+                    <button id="btnConsultaNuevaGuardar" type="submit" form="frmNuevaConsulta">Guardar</button>
+                </div>
             </div>
         </article>
         <article aria-label="Inicio de sesión" id="actLogin">

@@ -2,6 +2,7 @@ RewriteEngine On
 
 RewriteBase /
 RewriteRule ^phpmyadmin - [L,NC]
+RewriteRule ^imagen/.*$ - [END,QSA]
 RewriteRule ^(.*).jpg$ cliente/$1.jpg [END,QSA]
 RewriteRule ^(.*).png$ cliente/$1.png [END,QSA]
 RewriteRule ^(.*).css$ cliente/$1.css [END,QSA]

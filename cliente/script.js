@@ -1,4 +1,41 @@
 "use strict"
+function rellenarPerfil(idMasc){
+    let ven = document.getElementById("actPerfilMascota");
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        // Limpiar
+        ven.children[0].children[0].src = "imagen/2016-04-13_carrot-updating-or-repairing_by-David-Revoy.jpg";
+        ven.children[1].children[0].children[1].textContent = "";
+        ven.children[1].children[1].children[1].textContent = "";
+        ven.children[1].children[2].children[1].textContent = "";
+        ven.children[1].children[3].children[1].textContent = "";
+        ven.children[1].children[4].children[1].textContent = "";
+        ven.children[1].children[5].children[1].textContent = "";
+        ven.children[1].children[6].children[1].textContent = "";
+        ven.children[1].children[7].children[1].textContent = "";
+        ven.children[1].children[8].children[1].textContent = "";
+        ven.children[3].children[1].textContent = "";
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                ven.children[0].children[0].src = "/imagen/"+d['imgMasc'];
+                ven.children[1].children[0].children[1].textContent = d['nomMasc'];
+                ven.children[1].children[1].children[1].textContent = d['idMasc'];
+                ven.children[1].children[2].children[1].textContent = d['fechaNacMasc'];
+                ven.children[1].children[3].children[1].textContent = d['especieMasc'];
+                ven.children[1].children[4].children[1].textContent = d['razaMasc'];
+                ven.children[1].children[5].children[1].textContent = (d['sexoMasc']==0)?"Macho":"Hembra";
+                ven.children[1].children[6].children[1].textContent = (d['convivenciaMasc']==0)?"No":"Sí";
+                ven.children[1].children[7].children[1].textContent = (d['viajeMasc']==0)?"No":"Sí";
+                ven.children[1].children[8].children[1].textContent = d['microchipMasc']||"—";
+                ven.children[3].children[1].textContent = "";
+            } else noti.error("Error al recuperar la lista de pacientes");
+        }
+    }
+    xmlhttp.open("GET", "paciente/"+idMasc);
+    xmlhttp.send();
+}
+
 function actualTablaPacientes(cteMasc){
     let tbl = document.querySelector("#actPacientes .formBusqueda table:nth-of-type(2) tbody");
     tbl.textContent = "";
@@ -13,8 +50,14 @@ function actualTablaPacientes(cteMasc){
                     fila.insertCell(-1).textContent = e["nomMasc"];
                     fila.insertCell(-1).textContent = e["especieMasc"];
                     fila.insertCell(-1).textContent = e["razaMasc"];
-                    fila.insertCell(-1).textContent = e["sexoMasc"];
+                    fila.insertCell(-1).textContent = (e["sexoMasc"] == "0")?"Macho":"Hembra";
                     fila.insertCell(-1).textContent = e["fechaNacMasc"];
+                    let btnAct = document.createElement("button");
+                    btnAct.type = "button";
+                    btnAct.classList.add("accion");
+                    btnAct.textContent = "Perfil";
+                    btnAct.addEventListener("click", (e) => estPantalla("actPerfilMascota", e.target.parentNode.parentNode.children[0].textContent) );
+                    fila.insertCell(-1).appendChild(btnAct);
                 });
             } else noti.error("Error al recuperar la lista de pacientes");
         }
@@ -64,14 +107,12 @@ function actualTablaClientes(v){
                     fila.insertCell(-1).textContent = e["cpCte"];
                     fila.insertCell(-1).textContent = e["munCte"] + ", " + Array.from(document.getElementById("dlEstado").children).find((e2) => e2.value == e["edoCte"]).textContent;
                     if (v == 1){
-                        let rdAct = document.createElement("input");
-                        rdAct.type = "radio";
-                        rdAct.name = "rdAct";
-                        rdAct.addEventListener("change", (e) => {
-                            if (e.target.checked)
-                                actualTablaPacientes(e.target.parentNode.parentNode.children[0].textContent);
-                        });
-                        fila.insertCell(-1).appendChild(rdAct);
+                        let btnAct = document.createElement("button");
+                        btnAct.type = "button";
+                        btnAct.classList.add("accion");
+                        btnAct.textContent = "Mascotas";
+                        btnAct.addEventListener("click", (e) => actualTablaPacientes(e.target.parentNode.parentNode.children[0].textContent) );
+                        fila.insertCell(-1).appendChild(btnAct);
                     }
                 });
             } else noti.error("Error al recuperar la lista de clientes");
@@ -125,10 +166,31 @@ function estPantalla(id){
         document.getElementById("btnCerrarSesion").hidden = (id == "actLogin" || id == "actRegistro");
         let btnRegresar = document.getElementById("btnRegresarMenu");
         switch (id){
-            case "actMain": case "actInv": case "actLogin": case "actRegistro":
-                btnRegresar.hidden = true; break;
+            case "actMedicamentos": case "actMateriales": case "actPacientesMenu": case "actInv":
+                btnRegresar.hidden = false; break;
             default:
-                btnRegresar.hidden = false;
+                btnRegresar.hidden = true;
+        }
+        let btnRegresarPaciente = document.getElementById("btnRegresarMenuPaciente");
+        switch (id){
+            case "actConsultas": case "actConsultaNueva": case "actClientes": case "actPacientes": case "actPerfilMascota":
+                btnRegresarPaciente.hidden = false; break;
+            default:
+                btnRegresarPaciente.hidden = true;
+        }
+        let btnRegresarPerfil = document.getElementById("btnRegresarPerfilPaciente");
+        switch (id){
+            case "actCarnet":
+                btnRegresarPerfil.hidden = false; break;
+            default:
+                btnRegresarPerfil.hidden = true;
+        }
+        let btnConsultarCarnet = document.getElementById("btnConsultarCarnet");
+        switch (id){
+            case "actPerfilMascota":
+                btnConsultarCarnet.hidden = false; break;
+            default:
+                btnConsultarCarnet.hidden = true;
         }
         // Actualización de listados
         switch (id){
@@ -142,6 +204,8 @@ function estPantalla(id){
                 actualTablaInventario(0); break;
             case "actMedicamentos":
                 actualTablaInventario(1); break;
+            case "actPerfilMascota":
+                rellenarPerfil(arguments[1]);
         }
     }
 }
@@ -166,18 +230,24 @@ window.addEventListener("DOMContentLoaded", () => {
         else estPantalla("actLogin");
     });
 
+    // Obligatoriedad
+    Array.from(document.querySelectorAll("[required]")).forEach((e) => e.previousElementSibling.classList.add("requerido") );
+
     // Métodos de botones
-    document.getElementById("btnRegresarMenu").addEventListener("click", () => estPantalla("actMain") );
     document.getElementById("btnMainPacientesMenu").addEventListener("click", () => estPantalla("actPacientesMenu"));
     document.getElementById("btnPAcientesMClientes").addEventListener("click", () => estPantalla("actClientes") );
     document.getElementById("btnPacientesMPacientes").addEventListener("click", () => estPantalla("actPacientes") );
-    document.getElementById("btnPacientesMConsultaNueva").addEventListener("click", () => estPantalla("actMain") );
-    document.getElementById("btnPacientesMConsultas").addEventListener("click", () => estPantalla("actMain") );
+    document.getElementById("btnPacientesMConsultaNueva").addEventListener("click", () => estPantalla("actConsultaNueva") );
+    document.getElementById("btnPacientesMConsultas").addEventListener("click", () => estPantalla("actConsultas") );
     document.getElementById("btnMainInventario").addEventListener("click", () => estPantalla("actInv"));
     document.getElementById("btnInvMateriales").addEventListener("click", () => estPantalla("actMateriales"));
     document.getElementById("btnInvMedicamentos").addEventListener("click", () => estPantalla("actMedicamentos"));
     document.getElementById("btnLoginRestablecer").addEventListener("click", () => noti.success("Contacte al administrador para restablecer su contraseña."));
     document.getElementById("btnLoginRegistrar").addEventListener("click", () => estPantalla("actRegistro"));
+
+    /* Botones barra superior */
+    document.getElementById("btnRegresarMenu").addEventListener("click", () => estPantalla("actMain") );
+    document.getElementById("btnRegresarMenuPaciente").addEventListener("click", () => estPantalla("actPacientesMenu") );
     document.getElementById("btnCerrarSesion").addEventListener("click", () => {
         let xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -287,7 +357,6 @@ window.addEventListener("DOMContentLoaded", () => {
             "&txtMaterialesForma="+encodeURIComponent(document.getElementById("txtMaterialesForma").value)+"&txtInvTipo=0"
         );
     });
-
     document.querySelector("#actClientes form").addEventListener("submit", (e) => {
         e.preventDefault();
         let xmlhttp = new XMLHttpRequest();
@@ -317,7 +386,6 @@ window.addEventListener("DOMContentLoaded", () => {
             "&selClientesEdo="+encodeURIComponent(document.getElementById("selClientesEdo").value)
         );
     });
-
     document.querySelector("#actPacientes form").addEventListener("submit", (e) => {
         e.preventDefault();
         let xmlhttp = new XMLHttpRequest();
@@ -332,18 +400,18 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
         xmlhttp.open("POST", "pacientes");
-        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xmlhttp.send(
-            "txtPacientesNombre="+encodeURIComponent(document.getElementById("txtPacientesNombre").value)+
-            "&selPacientesViaje="+encodeURIComponent(document.getElementById("selPacientesViaje").value)+
-            "&selPacientesConv="+encodeURIComponent(document.getElementById("selPacientesConv").value)+
-            "&txtPacientesFNac="+encodeURIComponent(document.getElementById("txtPacientesFNac").value)+
-            "&txtPacientesRaza="+encodeURIComponent(document.getElementById("txtPacientesRaza").value)+
-            "&selPacientesSexo="+encodeURIComponent(document.getElementById("selPacientesSexo").value)+
-            "&txtPacientesEspecie="+encodeURIComponent(document.getElementById("txtPacientesEspecie").value)+
-            "&txtPacientesMicrochip="+encodeURIComponent(document.getElementById("txtPacientesMicrochip").value)+
-            "&selPacientesDueno="+encodeURIComponent(document.getElementById("selPacientesDueno").value)
-        );
+        const formData = new FormData();
+        formData.append("txtPacientesNombre", document.getElementById("txtPacientesNombre").value);
+        formData.append("selPacientesViaje", document.getElementById("selPacientesViaje").value);
+        formData.append("selPacientesConv", document.getElementById("selPacientesConv").value);
+        formData.append("txtPacientesFNac", document.getElementById("txtPacientesFNac").value);
+        formData.append("txtPacientesRaza", document.getElementById("txtPacientesRaza").value);
+        formData.append("selPacientesSexo", document.getElementById("selPacientesSexo").value);
+        formData.append("txtPacientesEspecie", document.getElementById("txtPacientesEspecie").value);
+        formData.append("txtPacientesMicrochip", document.getElementById("txtPacientesMicrochip").value);
+        formData.append("selPacientesDueno", document.getElementById("selPacientesDueno").value);
+        formData.append("arcPacientesImagen", document.getElementById("arcPacientesImagen").files[0]);
+        xmlhttp.send(formData);
     });
 
     // Eventos de campos de búsqueda
@@ -364,5 +432,15 @@ window.addEventListener("DOMContentLoaded", () => {
                 });
             }
         });
-    })
+    });
+
+    // Eventos de widgets
+    Array.from(document.querySelectorAll("input[type=\"file\"]")).forEach((e) => {
+        e.addEventListener("change", (e2) => e2.target.previousElementSibling.value = e2.target.files[0].name );
+        e.previousElementSibling.addEventListener("click", (e2) => e2.target.nextElementSibling.click() );
+        e.nextElementSibling.addEventListener("click", (e2) => {
+            e2.target.previousElementSibling.previousElementSibling.value = "";
+            e2.target.previousElementSibling.value = "";
+        });
+    });
 });
