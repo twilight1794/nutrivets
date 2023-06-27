@@ -166,7 +166,7 @@
                         <div class="pseudoarc">
                             <input type="text" id="arcPacientesImagenLabel" readonly="readonly" aria-label="Nombre de la imagen del perro" placeholder="Ninguno" />
                             <input type="file" id="arcPacientesImagen" accept="image/*" />
-                            <button type="button">X</button>
+                            <button type="button">🗙</button>
                         </div>
                     </fieldset>
                     <fieldset>
@@ -273,27 +273,96 @@
             </div>
         </article>
         <article aria-label="Perfil de paciente" id="actPerfilMascota">
-            <figure>
-                <img src="" alt="Imagen de la mascota" />
-            </figure>
-            <dt aria-label="Datos del paciente">
-                <div><dt>Nombre</dt><dd></dd></div>
-                <div><dt>ID</dt><dd></dd></div>
-                <div><dt>Fecha de nacimiento</dt><dd></dd></div>
-                <div><dt>Especie</dt><dd></dd></div>
-                <div><dt>Raza</dt><dd></dd></div>
-                <div><dt>Sexo</dt><dd></dd></div>
-                <div><dt>Convivencia</dt><dd></dd></div>
-                <div><dt>Viaje</dt><dd></dd></div>
-                <div><dt>Microchip</dt><dd></dd></div>
-            </dt>
+            <div>
+                <figure>
+                    <img src="1.jpg" alt="Imagen de la mascota" />
+                </figure>
+                <dl aria-label="Datos del paciente">
+                    <div><dt>Nombre</dt><dd></dd></div>
+                    <div><dt>ID</dt><dd></dd></div>
+                    <div><dt>Fecha de nacimiento</dt><dd></dd></div>
+                    <div><dt>Especie</dt><dd></dd></div>
+                    <div><dt>Raza</dt><dd></dd></div>
+                    <div><dt>Sexo</dt><dd></dd></div>
+                    <div><dt>Convivencia</dt><dd></dd></div>
+                    <div><dt>Viaje</dt><dd></dd></div>
+                    <div><dt>Microchip</dt><dd></dd></div>
+                </dl>
+            </div>
             <h2>Consultas</h2>
             <table>
-                <thead><tr><th>ID</th><th>Fecha</th><th>Doctor</th><th>Motivo</th><th>Descripción</th></tr></thead>
+                <thead><tr><th>ID</th><th>Fecha</th><th>Doctor</th><th>Motivo</th><th>Descripción</th><th>Costo</th></tr></thead>
                 <tbody></tbody>
             </table>
         </article>
-        <article aria-label="Consultas" id="actConsultas"></article>
+        <article aria-label="Carnet de paciente" id="actCarnet">
+            <div>
+                <button id="imprimirEsto">Pulsa aquí para imprimir</button>
+            </div>
+            <div>
+                <div>
+                    <h2>Mascota</h2>
+                    <figure>
+                        <img src="1.jpg" alt="Imagen de la mascota" />
+                    </figure>
+                    <dl aria-label="Datos del paciente">
+                        <div><dt>Nombre del paciente</dt><dd></dd></div>
+                        <div><dt>Fecha de nacimiento</dt><dd></dd></div>
+                        <div><dt>Especie</dt><dd></dd></div>
+                        <div><dt>Raza</dt><dd></dd></div>
+                        <div><dt>Sexo</dt><dd></dd></div>
+                        <div><dt>Convive con otras mascotas</dt><dd></dd></div>
+                        <div><dt>Viaja</dt><dd></dd></div>
+                        <div><dt>¿A dónde?</dt><dd></dd></div>
+                    </dl>
+                </div>
+                <div>
+                    <h2>Propietario</h2>
+                    <dl aria-label="Datos del propietario">
+                        <div><dt>Nombre</dt><dd></dd></div>
+                        <div><dt>Apellido paterno</dt><dd></dd></div>
+                        <div><dt>Apellido materno</dt><dd></dd></div>
+                        <div style="visibility: hidden"><dt>Teléfono</dt><dd></dd></div>
+                    </dl>
+                </div>
+                <div>
+                    <h2>Médico</h2>
+                    <dl aria-label="Datos del propietario">
+                        <div><dt>Nombre</dt><dd></dd></div>
+                        <div style="visibility: hidden"><dt>Teléfono</dt><dd></dd></div>
+                        <div style="visibility: hidden"><dt>Correo</dt><dd></dd></div>
+                    </dl>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h2>Vacunaciones</h2>
+                    <table>
+                        <thead><tr><th>Fecha</th><th>Etiqueta</th><th>Vacuna</th><th>Próxima</th><th>Firma V</th></tr></thead>
+                    <tbody><tr><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td></tr><tr><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td></tr><tr><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td></tr></tbody>
+                    </table>
+                </div>
+                <div>
+                    <h2>Desparasitaciones</h2>
+                    <table>
+                        <thead><tr><th>Fecha</th><th>Fármaco</th><th>Próxima</th></tr></thead>
+                        <tbody><tr><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td></tr><tr><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td></tr><tr><td>&#xa0;</td><td>&#xa0;</td><td>&#xa0;</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </article>
+        <article aria-label="Consultas" id="actConsultas">
+            <div class="formBusqueda">
+                <h2>Buscar consultas</h2>
+                <fieldset>
+                    <input type="date" id="txtConsultasFiltro" aria-label="Filtrar consultas por fecha" />
+                </fieldset>
+                <table>
+                    <thead><tr><th>ID</th><th>Fecha</th><th>Doctor</th><th>Motivo</th><th>Descripción</th><th>Costo</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </article>
         <article aria-label="Nueva consulta" id="actConsultaNueva">
             <div class="formAgregar">
                 <h2>Consulta</h2>
@@ -326,26 +395,16 @@
                     </fieldset>
                     <fieldset>
                         <label for="txtConsultaNuevaPrecio">Precio de la consulta</label>
-                        <input type="number" id="selConsultaNuevaDoctor" step=".01" required="required" />
+                        <input type="number" id="txtConsultaNuevaPrecio" step=".01" min="0" required="required" />
                     </fieldset>
                     <fieldset>
                         <label for="textConsultaNuevaDescripcion">Descripción</label>
                         <textarea id="textConsultaNuevaDescripcion"></textarea>
                     </fieldset>
                     <h3>Medicamentos</h3>
-                    <div>
-                        <fieldset>
-                            <label for="selConsultaNuevaMedicamento-1">Medicamento</label>
-                            <select id="selConsultaNuevaMedicamento-1"></select>
-                        </fieldset>
-                        <fieldset>
-                            <label for="txtConsultaNuevaMedicamentoInd-1">Medicamento</label>
-                            <input type="text" id="txtConsultaNuevaMedicamentoInd-1" />
-                        </fieldset>
-                    </div>
                 </form>
                 <div>
-                    <button id="btnConsultaNuevaAnadMed" type="button" form="frmNuevaConsulta">Añadir medicamento</button>
+                    <button id="btnConsultaNuevaAnadMed" type="button" form="frmNuevaConsulta">Añadir prescripción</button>
                     <button id="btnConsultaNuevaGuardar" type="submit" form="frmNuevaConsulta">Guardar</button>
                 </div>
             </div>

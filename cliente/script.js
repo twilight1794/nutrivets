@@ -1,10 +1,133 @@
 "use strict"
+
+function rellenarCarnet(){
+    let ven = document.querySelectorAll("#actCarnet dl");
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                ven[0].children[0].children[1].textContent = d['nomMasc'];
+                ven[0].children[1].children[1].textContent = d['fechaNacMasc'];
+                ven[0].children[2].children[1].textContent = d['especieMasc'];
+                ven[0].children[3].children[1].textContent = d['razaMasc'];
+                ven[0].children[4].children[1].textContent = (d['sexoMasc']==0)?"Macho":"Hembra";
+                ven[0].children[5].children[1].textContent = (d['convivenciaMasc']==0)?"No":"Sí";
+                ven[0].children[6].children[1].textContent = (d['viajeMasc']==0)?"No":"Sí";
+                ven[0].children[7].children[1].textContent = "";
+                document.querySelector("#actCarnet img").src = (d['imgMasc'])?("/imagen/"+d['imgMasc']):"1.jpg";
+                ven[1].children[0].children[1].textContent = d['nomCte'];
+                ven[1].children[1].children[1].textContent = d['apPatCte'];
+                ven[1].children[2].children[1].textContent = d['apMatCte'];
+                window.print();
+            } else noti.error("Error al recuperar la lista de pacientes");
+        }
+    }
+    xmlhttp.open("GET", "paciente/"+localStorage.getItem("idMasc"));
+    xmlhttp.send();
+}
+
+function actualTablaConsultas(v){
+    let tbl;
+    if (v) tbl = document.querySelector("#actPerfilMascota tbody");
+    else tbl = document.querySelector("#actConsultas .formBusqueda tbody");
+    tbl.textContent = "";
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                d.forEach((e) => {
+                    let fila = tbl.insertRow();
+                    fila.insertCell(-1).textContent = e["idCon"];
+                    fila.insertCell(-1).textContent = e["fechaIngresoCon"]+"-"+e["fechaEgresoCon"];
+                    fila.insertCell(-1).textContent = e["nomUsu"]+" "+e["apPatUsu"]+" "+e["apMatUsu"];
+                    fila.insertCell(-1).textContent = e["motivoCon"];
+                    fila.insertCell(-1).textContent = e["descripcionCon"];
+                    fila.insertCell(-1).textContent = e["precioCon"];
+                });
+            } else noti.error("Error al recuperar la lista de consultas");
+        }
+    }
+    xmlhttp.open("GET", "consultas"+(v?("?idMasc="+v):""));
+    xmlhttp.send();
+}
+
+function actualInvCantidad(sel){
+    sel.parentNode.nextElementSibling.children[1].max = sel.selectedOptions[0].dataset.cant;
+}
+
+function actualListaMedicamentosEx(id){
+    let tbl = document.getElementById(id);
+    tbl.textContent = "";
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                d.forEach((e) => {
+                    let opt = document.createElement("option");
+                    opt.value = e["idMed"];
+                    opt.textContent = e["nombreMed"];
+                    opt.dataset.cant = e["cantInv"];
+                    tbl.appendChild(opt);
+                    actualInvCantidad(tbl);
+                });
+            } else noti.error("Error al recuperar la lista de medicamentos");
+        }
+    }
+    xmlhttp.open("GET", "inventario?invTipo=1");
+    xmlhttp.send();
+}
+
+function actualListaUsuarios(id){
+    let tbl = document.getElementById(id);
+    tbl.textContent = "";
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                d.forEach((e) => {
+                    let opt = document.createElement("option");
+                    opt.value = e["idUsu"];
+                    opt.textContent = e["nomUsu"] + " " + e["apPatUsu"] + " " + e["apMatUsu"];
+                    tbl.appendChild(opt);
+                });
+            } else noti.error("Error al recuperar la lista de usuarios");
+        }
+    }
+    xmlhttp.open("GET", "usuarios");
+    xmlhttp.send();
+}
+
+function actualListaPacientes(id, n){
+    let tbl = document.getElementById(id);
+    tbl.textContent = "";
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+        if (xmlhttp.readyState==4){
+            if (xmlhttp.status==200){
+                let d = JSON.parse(xmlhttp.responseText);
+                d.forEach((e) => {
+                    let opt = document.createElement("option");
+                    opt.value = e["idMasc"];
+                    opt.textContent = e["nomMasc"];
+                    tbl.appendChild(opt);
+                });
+            } else noti.error("Error al recuperar la lista de pacientes");
+        }
+    }
+    xmlhttp.open("GET", "pacientes?cteMasc="+n);
+    xmlhttp.send();
+}
+
 function rellenarPerfil(idMasc){
-    let ven = document.getElementById("actPerfilMascota");
+    let ven = document.querySelector("#actPerfilMascota>div:first-child");
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
         // Limpiar
-        ven.children[0].children[0].src = "imagen/2016-04-13_carrot-updating-or-repairing_by-David-Revoy.jpg";
+        ven.children[0].children[0].src = "1.jpg";
         ven.children[1].children[0].children[1].textContent = "";
         ven.children[1].children[1].children[1].textContent = "";
         ven.children[1].children[2].children[1].textContent = "";
@@ -14,11 +137,11 @@ function rellenarPerfil(idMasc){
         ven.children[1].children[6].children[1].textContent = "";
         ven.children[1].children[7].children[1].textContent = "";
         ven.children[1].children[8].children[1].textContent = "";
-        ven.children[3].children[1].textContent = "";
+        ven.parentNode.children[2].children[1].textContent = "";
         if (xmlhttp.readyState==4){
             if (xmlhttp.status==200){
                 let d = JSON.parse(xmlhttp.responseText);
-                ven.children[0].children[0].src = "/imagen/"+d['imgMasc'];
+                if (d['imgMasc']) ven.children[0].children[0].src = "/imagen/"+d['imgMasc'];
                 ven.children[1].children[0].children[1].textContent = d['nomMasc'];
                 ven.children[1].children[1].children[1].textContent = d['idMasc'];
                 ven.children[1].children[2].children[1].textContent = d['fechaNacMasc'];
@@ -28,7 +151,7 @@ function rellenarPerfil(idMasc){
                 ven.children[1].children[6].children[1].textContent = (d['convivenciaMasc']==0)?"No":"Sí";
                 ven.children[1].children[7].children[1].textContent = (d['viajeMasc']==0)?"No":"Sí";
                 ven.children[1].children[8].children[1].textContent = d['microchipMasc']||"—";
-                ven.children[3].children[1].textContent = "";
+                ven.parentNode.children[2].children[1].textContent = "";
             } else noti.error("Error al recuperar la lista de pacientes");
         }
     }
@@ -66,8 +189,8 @@ function actualTablaPacientes(cteMasc){
     xmlhttp.send();
 }
 
-function actualListaClientes(){
-    let tbl = document.getElementById("selPacientesDueno");
+function actualListaClientes(id){
+    let tbl = document.getElementById(id);
     tbl.textContent = "";
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function(){
@@ -80,6 +203,10 @@ function actualListaClientes(){
                     opt.textContent = e["nomCte"] + " " + e["apPatCte"] + " " + e["apMatCte"];
                     tbl.appendChild(opt);
                 });
+                if (id == "selConsultaNuevaCliente"){
+                    tbl.addEventListener("change", (e) => actualListaPacientes("selConsultaNuevaPaciente", e.target.value));
+                    actualListaPacientes("selConsultaNuevaPaciente", document.getElementById("selConsultaNuevaCliente").value);
+                }
             } else noti.error("Error al recuperar la lista de clientes");
         }
     }
@@ -197,7 +324,7 @@ function estPantalla(id){
             case "actClientes":
                 actualTablaClientes(0); break;
             case "actPacientes":
-                actualListaClientes();
+                actualListaClientes("selPacientesDueno");
                 actualTablaClientes(1);
                 break;
             case "actMateriales":
@@ -205,7 +332,18 @@ function estPantalla(id){
             case "actMedicamentos":
                 actualTablaInventario(1); break;
             case "actPerfilMascota":
+                localStorage.setItem("idMasc", arguments[1]);
                 rellenarPerfil(arguments[1]);
+                actualTablaConsultas(arguments[1]);
+                break;
+            case "actConsultaNueva":
+                actualListaClientes("selConsultaNuevaCliente");
+                actualListaUsuarios("selConsultaNuevaDoctor");
+                break;
+            case "actConsultas":
+                actualTablaConsultas();
+            case "actCarnet":
+                rellenarCarnet(localStorage.getItem("idMasc"));
         }
     }
 }
@@ -244,10 +382,49 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnInvMedicamentos").addEventListener("click", () => estPantalla("actMedicamentos"));
     document.getElementById("btnLoginRestablecer").addEventListener("click", () => noti.success("Contacte al administrador para restablecer su contraseña."));
     document.getElementById("btnLoginRegistrar").addEventListener("click", () => estPantalla("actRegistro"));
+    document.getElementById("btnConsultaNuevaAnadMed").addEventListener("click", () => {
+        let medFila = document.createElement("div");
+        medFila.classList.add("prescripcion");
+        let idNum = Math.floor(Math.random() * Math.random() * 10000);
+        let field1 = document.createElement("fieldset");
+        let label1 = document.createElement("label");
+        label1.textContent = "Medicamento";
+        label1.setAttribute("for", "selConsultaNuevoMedicamento-"+idNum);
+        let sel1 = document.createElement("select");
+        sel1.id = "selConsultaNuevoMedicamento-"+idNum;
+        sel1.addEventListener("change", (e) => actualInvCantidad(e.target) );
+        field1.append(label1, sel1);
+        let field2= document.createElement("fieldset");
+        let label2 = document.createElement("label");
+        label2.textContent = "Cantidad";
+        label2.setAttribute("for", "selConsultaNuevoMedicamentoCant-"+idNum);
+        let sel2 = document.createElement("input");
+        sel2.type = "number";
+        sel2.id =  "selConsultaNuevoMedicamentoCant-"+idNum;
+        field2.append(label2, sel2);
+        let field3= document.createElement("fieldset");
+        let label3 = document.createElement("label");
+        label3.textContent = "Indicaciones";
+        label3.setAttribute("for", "selConsultaNuevoMedicamentoInd-"+idNum);
+        let sel3 = document.createElement("input");
+        sel3.type = "text";
+        sel3.id =  "selConsultaNuevoMedicamentoInd-"+idNum;
+        field3.append(label3, sel3);
+        let btnBorrar = document.createElement("button");
+        btnBorrar.textContent = "🗙";
+        btnBorrar.type = "button";
+        btnBorrar.addEventListener("click", (e) => e.target.parentNode.parentNode.removeChild(e.target.parentNode));
+        medFila.append(field1, field2, field3, btnBorrar);
+        document.getElementById("frmNuevaConsulta").appendChild(medFila);
+        actualListaMedicamentosEx(sel1.id);
+    });
+    document.getElementById("imprimirEsto").addEventListener("click", (e) => window.print() );
 
     /* Botones barra superior */
     document.getElementById("btnRegresarMenu").addEventListener("click", () => estPantalla("actMain") );
     document.getElementById("btnRegresarMenuPaciente").addEventListener("click", () => estPantalla("actPacientesMenu") );
+    document.getElementById("btnRegresarPerfilPaciente").addEventListener("click", () => estPantalla("actPerfilMascota") );
+    document.getElementById("btnConsultarCarnet").addEventListener("click", () => estPantalla("actCarnet") );
     document.getElementById("btnCerrarSesion").addEventListener("click", () => {
         let xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -413,6 +590,39 @@ window.addEventListener("DOMContentLoaded", () => {
         formData.append("arcPacientesImagen", document.getElementById("arcPacientesImagen").files[0]);
         xmlhttp.send(formData);
     });
+    document.getElementById("frmNuevaConsulta").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if (xmlhttp.readyState==4){
+                if (xmlhttp.status==204){
+                    noti.success("¡Consulta creada!");
+                    actualTablaClientes(0);
+                } else if (xmlhttp.status==400) noti.error("Faltan datos para la operación");
+                //else noti.error("Hubo un error al registrar la consulta");
+            }
+        }
+        xmlhttp.open("POST", "consultas");
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        let prescripciones = document.getElementsByClassName("prescripcion");
+        let prescripcionesCon = "";
+        let cont = 1;
+        Array.from(prescripciones).forEach((e2) => {
+            prescripcionesCon += "&selConsultaNuevaMedicamento-"+cont+"="+e2.children[0].children[1].value+"&selConsultaNuevaMedicamentoCant-"+cont+"="+e2.children[1].children[1].value+"&selConsultaNuevaMedicamentoInd-"+cont+"="+encodeURIComponent(e2.children[2].children[1].value);
+            cont++;
+        });
+        xmlhttp.send(
+            "selConsultaNuevaCliente="+encodeURIComponent(document.getElementById("selConsultaNuevaCliente").value)+
+            "&selConsultaNuevaPaciente="+encodeURIComponent(document.getElementById("selConsultaNuevaPaciente").value)+
+            "&txtConsultaNuevaFIngreso="+encodeURIComponent(document.getElementById("txtConsultaNuevaFIngreso").value)+
+            "&txtConsultaNuevaFEgreso="+encodeURIComponent(document.getElementById("txtConsultaNuevaFEgreso").value)+
+            "&selConsultaNuevaDoctor="+encodeURIComponent(document.getElementById("selConsultaNuevaDoctor").value)+
+            "&txtConsultaNuevaMotivo="+encodeURIComponent(document.getElementById("txtConsultaNuevaMotivo").value)+
+            "&txtConsultaNuevaPrecio="+encodeURIComponent(document.getElementById("txtConsultaNuevaPrecio").value)+
+            "&textConsultaNuevaDescripcion="+encodeURIComponent(document.getElementById("textConsultaNuevaDescripcion").value)+
+            "&hiddenConsultaNuevaNumMeds="+prescripciones.length.toString()+prescripcionesCon
+        );
+    });
 
     // Eventos de campos de búsqueda
     Array.from(document.querySelectorAll("#txtMaterialesBuscar, #txtMedicamentosBuscar, #txtPacientesBuscar, #txtClientesBuscar")).forEach((e) => {
@@ -432,6 +642,12 @@ window.addEventListener("DOMContentLoaded", () => {
                 });
             }
         });
+    });
+    document.getElementById("txtConsultasFiltro").addEventListener("change", (e) => {
+        let v = e.target.value;
+        let t = e.target.parentElement.nextElementSibling.children[1];
+        if (v == "") Array.from(t.rows).forEach((e2) => e2.hidden = false);
+        else Array.from(t.rows).forEach((e2) => e2.hidden = (e2.cells[1].textContent.indexOf(v) == -1));
     });
 
     // Eventos de widgets

@@ -1,5 +1,25 @@
 <?php
 
+function Usuarios_GET(){
+    global $mysqli;
+    $objLista = [];
+    $resultado = $mysqli->query("SELECT * FROM `usuarios`;");
+    while ($fila = $resultado->fetch_assoc()){
+        $obj = [
+            "idUsu" => $fila['idUsu'],
+            "nomUsu" => $fila['nomUsu'],
+            "apPatUsu" => $fila['apPatUsu'],
+            "apMatUsu" => $fila['apMatUsu'],
+            "telUsu" => $fila['telUsu'],
+            "emailUsu" => $fila['emailUsu'],
+            "tipoUsu" => $fila['tipoUsu'],
+        ];
+        array_push($objLista, $obj);
+    }
+    header("Content-Type: application/json", true);
+    echo json_encode($objLista);
+}
+
 function Usuarios_POST(){
     global $mysqli;
     if (!isset($_POST['nomUsu']) or !isset($_POST['apPatUsu']) or !isset($_POST['emailUsu']) or !isset($_POST['contraUsu']) or !isset($_POST['tipoUsu']) or !isset($_POST['telUsu'])){

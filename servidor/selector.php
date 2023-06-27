@@ -46,12 +46,14 @@ if (str_starts_with($uri[0], "pacientes")){
 } else if (str_starts_with($uri[0], "paciente")){
     require "pacientes.php";
     if ($metodo == "GET") Paciente_GET($uri[1]);
+
 } else if (str_starts_with($uri[0], "clientes")){
     require "clientes.php";
     if ($metodo == "GET") Clientes_GET();
     else if ($metodo == "POST") Clientes_POST();
 } else if (str_starts_with($uri[0], "cliente")){
     require "clientes.php";
+
 } else if (str_starts_with($uri[0], "inventario")){
     require "inventario.php";
     if (count($uri) > 2){
@@ -60,11 +62,22 @@ if (str_starts_with($uri[0], "pacientes")){
         if ($metodo == "GET") Inventario_GET();
         else if ($metodo == "POST") Inventario_POST();
     }
+
 } else if (str_starts_with($uri[0], "usuarios")){
     require "usuarios.php";
-    if ($metodo == "POST") Usuarios_POST();
+    if ($metodo == "GET") Usuarios_GET();
+    else if ($metodo == "POST") Usuarios_POST();
 } else if (str_starts_with($uri[0], "usuario")){
     require "usuarios.php";
+
+} else if (str_starts_with($uri[0], "consultas")){
+    require "consultas.php";
+    if ($metodo == "GET") Consultas_GET();
+    else if ($metodo == "POST") Consultas_POST();
+} else if (str_starts_with($uri[0], "consulta")){
+    require "consultas.php";
+    #if ($metodo == "GET") Consulta_GET()
+
 } else if (str_starts_with($uri[0], "sesion")){
     require "sesion.php";
     if ($metodo == "POST") Sesion_POST();

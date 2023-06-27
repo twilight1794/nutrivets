@@ -18,6 +18,7 @@ function Inventario_GET(){
             $fila_mat = $resultado_mat->fetch_assoc();
             $obj['nombreMat'] = $fila_mat['nombreMat'];
             $obj['formaVentaMat'] = $fila_mat['formaVentaMat'];
+            $obj['idMat'] = $fila_mat['idMat'];
             array_push($objLista, $obj);
             continue;
         }
@@ -29,6 +30,7 @@ function Inventario_GET(){
             $obj['nombreMed'] = $fila_med['nombreMed'];
             $obj['principioActMed'] = $fila_med['principioActMed'];
             $obj['formaVentaMed'] = $fila_med['formaVentaMed'];
+            $obj['idMed'] = $fila_med['idMed'];
             array_push($objLista, $obj);
             continue;
         }
